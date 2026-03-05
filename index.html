@@ -3,56 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ASCII Portfolio</title>
+  <title>ASCII Animal Gallery</title>
 
   <style>
-    body {
-      margin: 0;
-      background: #ffffff;
-      color: #1a1a1a;
-      font-family: "Courier New", Courier, monospace;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+    :root {
+      --ink: #0b1d3a;
+      --paper: #ffffff;
     }
 
-    pre {
-      white-space: pre;
-      font-size: clamp(12px, 2.2vw, 16px);
-      line-height: 1.25;
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Courier New", Courier, monospace;
+      display: flex;
+      justify-content: center;
     }
 
     .container {
-      max-width: 900px;
-      padding: 24px;
+      max-width: 1100px;
+      padding: 48px 24px;
     }
 
-    .cat-block {
-      background: #0b1d3a;
-      color: #ffffff;
-      padding: 24px;
-      margin-bottom: 24px;
+    h1 {
+      font-size: 14px;
+      font-weight: normal;
+      letter-spacing: 0.3em;
+      text-align: center;
+      margin-bottom: 48px;
     }
 
-    .dim { opacity: 0.75; }
-    .accent { opacity: 0.9; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .piece {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 32px 24px;
+      position: relative;
+    }
+
+    .label {
+      position: absolute;
+      top: -12px;
+      left: 16px;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 11px;
+      padding: 2px 6px;
+      letter-spacing: 0.15em;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    /* ---------------- ANIMATIONS ---------------- */
+
+    /* Cat: slow blink */
+    .eyes-open { display: inline; }
+    .eyes-closed { display: none; }
+
+    .blink .eyes-open { animation: eyesOpen 6s infinite; }
+    .blink .eyes-closed { animation: eyesClosed 6s infinite; }
+
+    @keyframes eyesOpen {
+      0%, 92%, 100% { display: inline; }
+      94%, 96% { display: none; }
+    }
+
+    @keyframes eyesClosed {
+      0%, 92%, 100% { display: none; }
+      94%, 96% { display: inline; }
+    }
+
+    /* Fish: swim across container, reverse direction */
+    .fish {
+      position: relative;
+      animation: swim-across 6s linear infinite alternate;
+    }
+
+    @keyframes swim-across {
+      from { transform: translateX(0); }
+      to   { transform: translateX(180px); }
+    }
+
+    @keyframes swim-across {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(180px); }
+    }
+    @keyframes drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(8px); }
+    }
+
+    /* Bird: breathing motion */
+    .bird { animation: breathe 4s ease-in-out infinite; }
+    @keyframes breathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* Rabbit: wander */
+    .rabbit {
+      position: relative;
+      animation: wander 7s ease-in-out infinite;
+    }
+
+    @keyframes wander {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(20px, -6px); }
+      50%  { transform: translate(40px, 6px); }
+      75%  { transform: translate(20px, -4px); }
+      100% { transform: translate(0, 0); }
+    }
+    @keyframes breathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    footer {
+      margin-top: 64px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-align: center;
+    }
+
+    /* Owl: subtle head tilt */
+    .owl { animation: tilt 5s ease-in-out infinite; }
+    @keyframes tilt {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(1deg); }
+    }
+
+    /* Pause animation on hover (gallery etiquette) */
+    .piece:hover pre {
+      animation-play-state: paused;
+    }
+
+    /* Reduce motion support */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-<pre>
-================================================================================
-                                ASCII PORTFOLIO
-================================================================================
 
-<div class="cat-block">
+<h1>ASCII ANIMAL STUDIES</h1>
+
+<div class="gallery">
+
+<!-- CAT (ORIGINAL) -->
+<div class="piece">
+<span class="label">CAT</span>
+<pre class="blink">
       / \ _____  __
      /  /         /
     /             |
     |     __    __
-    |      == X ==    
+    |      <span class="eyes-open">== X ==</span><span class="eyes-closed">--   --</span>    
     /          --|
    /             )
    |       \     ) 
@@ -60,47 +179,71 @@
 /   ___|    |  |  | 
 |  (____\ _ \ __)__)
 \_______)
+</pre>
 </div>
 
---------------------------------------------------------------------------------
-NAME:        Alexandra Harrower
-PROGRAM:     Design
-COURSE:      Design 34 – Santa Monica College
-YEAR:        2026
---------------------------------------------------------------------------------
+<!-- DOG -->
+<div class="piece">
+<span class="label">DOG</span>
+<pre>
+      /^-----^\
+     V  o   o  V
+      |   Y   |
+       \  Q  /
+       /-----\
+      /       \
+</pre>
+</div>
 
-ABOUT ME
---------
-I am a student exploring creative ways to build websites using only
-text, symbols, and structure. This project focuses on constraints:
-no images, no graphics, no frameworks — only ASCII and HTML.
+<!-- FISH -->
+<div class="piece">
+<span class="label">FISH</span>
+<pre class="fish">
+      ><(((°> 
+</pre>
+</div>
 
-INTERESTS
----------
-- Creative coding
-- Minimalist web design
-- Retro / terminal-style interfaces
-- Exploring limitations as a design tool
+<!-- BIRD -->
+<div class="piece">
+<span class="label">BIRD</span>
+<pre class="bird">
+        \
+       (o >
+      /  )
+      """"
+</pre>
+</div>
 
-PROJECTS
---------
-[01] ASCII CAT WEBSITE
-     A pure ASCII-art webpage rendered using HTML <pre> formatting.
+<!-- RABBIT -->
+<div class="piece">
+<span class="label">RABBIT</span>
+<pre class="rabbit">
+      (\_//)
+      ( • • )
+      /  ^  \
+</pre>
+</div>
 
-[02] TERMINAL UI MOCKUP
-     Interface concepts inspired by command-line tools and old systems.
+<!-- OWL -->
+<div class="piece">
+<span class="label">OWL</span>
+<pre class="owl">
+        ,_,
+       (<span class="tilt-left">O</span>,<span class="tilt-right">O</span>)
+       (   )
+        "-"
+       /|   |\
+      /_|   |_\
+</pre>
+</div>
 
-[03] TEXT-ONLY PORTFOLIO (THIS SITE)
-     A self-contained, single-file website with zero images.
+<footer>
+  Alexandra Harrower · Design 34 · Santa Monica College · 2026
+</footer>
 
-SKILLS
-------
-HTML        : ##########
-CSS         : ########
-JAVASCRIPT  : #####
-CREATIVITY  : ##########
-
-
+</div>
+</body>
+</html>
 
 
 
